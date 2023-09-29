@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "292983985801",
+    "project_id": "twixor-agent-simulator",
+    "storage_bucket": "twixor-agent-simulator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292983985801:android:ea82807e6427f5fc655858",
+        "android_client_info": {
+          "package_name": "com.twixoragent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292983985801-3svrinen7qsbciiese9ns9d98e9ca12r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDapfJrlIdCtnFymmSJrQpb_oLa52aTEL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292983985801-3svrinen7qsbciiese9ns9d98e9ca12r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
