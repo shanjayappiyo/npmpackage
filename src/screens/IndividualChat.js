@@ -44,9 +44,6 @@ let data = [
       { id: 7, sender: 'john', text: 'Do you know when it will be fixed?', timestamp: '12:30 PM' },
       { id: 8, sender: 'me', text: 'The development team is actively working on it. Hopefully, it will be resolved soon.', timestamp: '12:45 PM' },
       { id: 9, sender: 'john', text: 'Alright, thanks for the update.', timestamp: '1:00 PM' },
-      { id: 10, sender: 'john', text: 'Do you know when it will be fixed?', timestamp: '12:30 PM' },
-      { id: 11, sender: 'me', text: 'The development team is actively working on it. Hopefully, it will be resolved soon.', timestamp: '12:45 PM' },
-      { id: 12, sender: 'john', text: 'Alright, thanks for the update.', timestamp: '1:00 PM' },
     ],
   },
 ];
@@ -558,7 +555,7 @@ let styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: '10.5%',
   },
   messageSent: {
     backgroundColor: '#d9fdd3',
