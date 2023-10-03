@@ -19,7 +19,7 @@ import {
   ImageBackground,
   ToastAndroid,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ImagePicker from 'react-native-image-picker';
 
@@ -31,24 +31,24 @@ let data = [
     name: 'Customer Support Team',
     avatar: 'https://img.freepik.com/free-photo/grandma-taking-care-plants-garden_23-2149518819.jpg?w=900&t=st=1695981111~exp=1695981711~hmac=405e653d42c5005c7c256588fca3e7d8671f1b989ca1124b78c1c9a29f02726f',
     lastMessage: 'Hi, Good Morning',
-    time: '10:30 AM',
+    time: 'Sep 12th 2023 10:30 AM',
     unreadCount: 3,
     status: 'online',
     messages: [
-      { id: 1, sender: 'john', text: 'Hi there', timestamp: '10:00 AM' },
-      { id: 2, sender: 'me', text: 'Hi, Good Morning', timestamp: '11:00 AM' },
-      { id: 3, sender: 'john', text: 'How are your relatives?', timestamp: '11:30 AM' },
-      { id: 4, sender: 'me', text: 'They are doing well, thanks for asking!', timestamp: '11:45 AM' },
-      { id: 5, sender: 'john', text: 'Thats great to hear. By the way, have you heard about the testing messages issue?', timestamp: '12:00 PM' },
-      { id: 6, sender: 'me', text: 'Yes, Ive heard about it. It happened due to a server glitch.', timestamp: '12:15 PM' },
-      { id: 7, sender: 'john', text: 'Do you know when it will be fixed?', timestamp: '12:30 PM' },
-      { id: 8, sender: 'me', text: 'The development team is actively working on it. Hopefully, it will be resolved soon.', timestamp: '12:45 PM' },
-      { id: 9, sender: 'john', text: 'Alright, thanks for the update.', timestamp: '1:00 PM' },
+      { id: 1, sender: 'john', text: 'Hi there', timestamp: 'Sep 12th 2023 10:00 AM' },
+      { id: 2, sender: 'me', text: 'Hi, Good Morning', timestamp: 'Sep 12th 2023 11:00 AM' },
+      { id: 3, sender: 'john', text: 'How are your relatives?', timestamp: 'Sep 12th 2023 11:30 AM' },
+      { id: 4, sender: 'me', text: 'They are doing well, thanks for asking!', timestamp: 'Sep 12th 2023 11:45 AM' },
+      { id: 5, sender: 'john', text: 'Thats great to hear. By the way, have you heard about the testing messages issue?', timestamp: 'Sep 12th 2023 12:00 PM' },
+      { id: 6, sender: 'me', text: 'Yes, Ive heard about it. It happened due to a server glitch.', timestamp: 'Sep 12th 2023 12:15 PM' },
+      { id: 7, sender: 'john', text: 'Do you know when it will be fixed?', timestamp: 'Sep 12th 2023 12:30 PM' },
+      { id: 8, sender: 'me', text: 'The development team is actively working on it. Hopefully, it will be resolved soon.', timestamp: 'Sep 12th 2023 12:45 PM' },
+      { id: 9, sender: 'john', text: 'Alright, thanks for the update.', timestamp: ' Sep 12th 2023 1:00 PM' },
     ],
   },
 ];
 
-function IndividualChat({ route }) {
+function IndividualChat() {
   const [chatData, setChatData] = React.useState(data[0]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [imageSource, setImageSource] = React.useState(null);
@@ -71,15 +71,26 @@ function IndividualChat({ route }) {
 
     ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
-        console.log('User cancelled photo picker');
-        Alert.alert('You did not select any image');
+        ToastAndroid.showWithGravityAndOffset(
+          'You Did Not Select Any Image / Documents',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP,
+          25,
+          50,
+        )
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
+        ToastAndroid.showWithGravityAndOffset(
+          'Cannot Browse the Gallery',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP,
+          25,
+          50,
+        )
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         let source = { uri: response.uri };
-        // ADD THIS
         setImageSource(source.uri);
       }
     });
@@ -248,7 +259,7 @@ function IndividualChat({ route }) {
   };
 
   const ChatHeader = () => {
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     return (
       <SafeAreaView style={{ backgroundColor: 'white' }}>
         <View style={styles.container}>
@@ -266,60 +277,31 @@ function IndividualChat({ route }) {
             <Image source={{ uri: chatData.avatar }} style={styles.avatar} />
             <View style={styles.textContainer}>
               <Text style={styles.title}>{chatData.name}</Text>
-              <Text style={styles.subtitle}>{chatData.status}</Text>
+              {/* <Text style={styles.subtitle}>{chatData.status}</Text> */}
             </View>
           </View>
-          <View style={styles.rightContainer}>
+          {/* <View style={styles.rightContainer}>
             <TouchableOpacity onPress={triggerMenu}>
               <Image
                 source={require('../../assets/inside_menu_64.png')}
                 style={styles.icon}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </SafeAreaView>
     );
   };
 
   const ChatBody = () => {
-    // const renderMessage = ({ item }) => {
-    //   return (
-    //     <ScrollView
-    //       style={
-    //         item.sender === 'me' ? styles.messageSent : styles.messageReceived
-    //       }>
-    //       {console.log(item)}
-    //       <Text style={styles.messageText}>{item.text.trim()}</Text>
-    //       <Text style={styles.timestampText}>{item.timestamp}</Text>
-    //       {item.imageSource ? <Image source={{ uri: item.imageSource }} style={{ width: 150, height: 150 }} /> : null}
-    //     </ScrollView>
-    //   );
-    // };
+    const scrollViewRef = React.useRef();
 
-    // return (
-    //   <FlatList
-    //     data={
-    //       chatData.messages.length > 0 ? (
-    //         chatData.messages.map(res => res)
-    //       ) : (
-    //         <View style={[styles.loadercontainer, styles.loaderhorizontal]}>
-    //           <ActivityIndicator
-    //             size="large"
-    //             color="#217eac"
-    //             text="Loading Data"
-    //           />
-    //         </View>
-    //       )
-    //     }
-    //     renderItem={renderMessage}
-    //     keyExtractor={item => item.id.toString()}
-    //     contentContainerStyle={styles.contentContainer}
-    //     refreshControl={
-    //       <RefreshControl refreshing={refreshing} onRefresh={refreshPage} />
-    //     }
-    //   />
-    // );
+    React.useEffect(() => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollToEnd({ animated: true });
+      }
+    }, [chatData.messages]);
+
     const renderMessages = () => {
       return chatData.messages.map(item => (
         <ScrollView
@@ -336,9 +318,13 @@ function IndividualChat({ route }) {
 
     return (
       <ImageBackground
-        source={require('../../assets/twixor_chat_bg.png')} // Replace with your actual image path
+        source={require('../../assets/twixor_chat_bg.png')}
         style={{ flex: 1 }}>
         <ScrollView
+          ref={scrollViewRef}
+          onContentSizeChange={() => {
+            scrollViewRef.current.scrollToEnd({ animated: true });
+          }}
           contentContainerStyle={styles.contentContainer}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refreshPage} />}>
           {chatData.messages.length > 0 ? renderMessages() : (
@@ -361,7 +347,7 @@ function IndividualChat({ route }) {
         sender: 'me',
         text: message,
         timestamp: '9:00 AM',
-        imageSource: imageSource, // Append the imageSource to the newMessage object
+        imageSource: imageSource,
       };
       const updatedChatData = {
         ...chatData,
@@ -369,7 +355,7 @@ function IndividualChat({ route }) {
       };
       setChatData(updatedChatData);
       setMessage('');
-      setImageSource(null); // Reset the imageSource after sending the message
+      setImageSource(null);
     };
 
     const BottomModalForIndividualChat = () => {
@@ -381,42 +367,46 @@ function IndividualChat({ route }) {
               transparent={true}
               visible={modalVisible}
               onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
                 setModalVisible(!modalVisible);
               }}>
-              <View style={[styles.centeredView, { height: height / 2 }]}>
-                <View style={styles.modalView}>
-                  <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={requestGalleryPermission}>
-                    <Image
-                      source={require('../../assets/gallery.png')}
-                      style={styles.imageIcon}
-                    />
-                    <Text style={styles.submitButtonText}>Gallery</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={requestCameraPermission}>
-                    <Image
-                      source={require('../../assets/photo_camera.png')}
-                      style={styles.imageIcon}
-                    />
-                    <Text style={styles.submitButtonText}>
-                      Camera
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Image
-                      source={require('../../assets/folder_open.png')}
-                      style={styles.imageIcon}
-                    />
-                    <Text style={styles.submitButtonText}>Documents</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <TouchableOpacity
+                style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}>
+                <View style={[styles.centeredView, { height: height / 2 }]}>
+                  <View style={styles.modalView}>
+                    <TouchableOpacity
+                      style={styles.submitButton}
+                      onPress={requestGalleryPermission}>
+                      <Image
+                        source={require('../../assets/gallery.png')}
+                        style={styles.imageIcon}
+                      />
+                      <Text style={styles.submitButtonText}>Gallery</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.submitButton}
+                      onPress={requestCameraPermission}>
+                      <Image
+                        source={require('../../assets/photo_camera.png')}
+                        style={styles.imageIcon}
+                      />
+                      <Text style={styles.submitButtonText}>
+                        Camera
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.submitButton}
+                      onPress={requestGalleryPermission}>
+                      <Image
+                        source={require('../../assets/folder_open.png')}
+                        style={styles.imageIcon}
+                      />
+                      <Text style={styles.submitButtonText}>Documents</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View></TouchableOpacity>
             </Modal>
           </View>
         </>
@@ -484,11 +474,6 @@ function IndividualChat({ route }) {
               </TouchableOpacity>
             ) : null}
           </View>
-          <View style={styles.poweredByContainer}>
-            <Text style={styles.poweredByText}>
-              Powered by <Image source={require('../../assets/logo_global.png')} style={styles.poweredByImage} />
-            </Text>
-          </View>
           <BottomModalForIndividualChat />
         </SafeAreaView>
       </KeyboardAvoidingView>
@@ -516,7 +501,7 @@ let styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
-    backgroundColor: '#047964'
+    backgroundColor: '#3c6e71'
   },
   backButton: {
     padding: 8,
@@ -540,10 +525,11 @@ let styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: 'bold',
     color: 'white',
-    fontFamily: 'Open Sans'
+    fontFamily: 'Open Sans',
+    paddingVertical: "2.5%"
   },
   subtitle: {
     fontSize: 14,
@@ -555,10 +541,11 @@ let styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 16,
-    paddingVertical: '10.5%',
+    paddingTop: "3%",
+    paddingBottom: "14%"
   },
   messageSent: {
-    backgroundColor: '#d9fdd3',
+    backgroundColor: '#d7ebec',
     alignSelf: 'flex-end',
     maxWidth: '80%',
     borderRadius: 8,
@@ -599,49 +586,6 @@ let styles = StyleSheet.create({
     alignSelf: 'flex-end',
     fontFamily: 'Open Sans'
   },
-  // messageSent: {
-  //   backgroundColor: '#1e7eae',
-  //   alignSelf: 'flex-end',
-  //   maxWidth: '80%',
-  //   borderRadius: 8,
-  //   padding: 8,
-  //   marginBottom: 8,
-  //   color: 'white',
-  //   borderTopRightRadius: 0
-  // },
-  // messageReceived: {
-  //   backgroundColor: '#e1f5fe',
-  //   alignSelf: 'flex-start',
-  //   maxWidth: '80%',
-  //   borderRadius: 8,
-  //   padding: 8,
-  //   marginBottom: 8,
-  //   borderTopLeftRadius: 0
-  // },
-  // messageText: {
-  //   fontSize: 16,
-  //   color: 'white',
-  //   fontFamily: 'Open Sans'
-  // },
-  // messageText1: {
-  //   fontSize: 16,
-  //   color: 'black',
-  //   fontFamily: 'Open Sans'
-  // },
-  // timestampText: {
-  //   fontSize: 12,
-  //   color: 'white',
-  //   marginTop: 4,
-  //   alignSelf: 'flex-end',
-  //   fontFamily: 'Open Sans'
-  // },
-  // timestampText1: {
-  //   fontSize: 12,
-  //   color: 'black',
-  //   marginTop: 4,
-  //   alignSelf: 'flex-end',
-  //   fontFamily: 'Open Sans'
-  // },
   footercontainer: {
     position: 'absolute',
     bottom: 0,
@@ -650,8 +594,7 @@ let styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingVertical: 8,
     paddingHorizontal: 16,
-    marginBottom: 30,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#f6f6f6'
   },
   attachmentButton: {
     marginRight: 16,
@@ -735,6 +678,8 @@ let styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0
   },
   button: {
     borderRadius: 20,
@@ -751,7 +696,7 @@ let styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#217eac',
+    borderColor: '#3c6e71',
     marginTop: 10,
     width: "30%",
     marginBottom: 10,
@@ -762,26 +707,11 @@ let styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
-  poweredByContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    backgroundColor: 'white'
-  },
-  poweredByText: {
-    fontSize: 12,
-    color: 'gray',
-    marginBottom: 10
-  },
-  poweredByImage: {
-    width: 70,
-    height: 20,
-    marginLeft: 5,
-  },
   imageIcon: {
-    width: 50,
-    height: 50,
-    marginLeft: 20,
-    marginRight: 20
+    width: 40,
+    height: 40,
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
 });
 
